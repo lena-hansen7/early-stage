@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Early Stage — AI Demo Day at MIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      background: #fff;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      gap: 2.8rem;
+    }
+
+    .wordmark {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(32px, 6.5vw, 68px);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      min-height: 1.2em;
+    }
+
+    .red { color: #D7160F; }
+    .black { color: #000; }
+
+    .cursor {
+      display: inline-block;
+      width: 0.12em;
+      height: 0.85em;
+      background: #D7160F;
+      vertical-align: text-bottom;
+      margin-left: 3px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    .body-line {
+      font-size: 13px;
+      font-weight: 300;
+      color: #aaa;
+      text-align: center;
+      line-height: 1.7;
+      max-width: 380px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .body-line.show { opacity: 1; }
+
+    .info {
+      font-size: 11px;
+      font-weight: 300;
+      color: #ccc;
+      text-align: center;
+      line-height: 2;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.2s;
+    }
+    .info.show { opacity: 1; }
+
+    footer {
+      border-top: 1px solid #ebebeb;
+      padding: 1.1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy { font-size: 11px; color: #ccc; }
+
+    .cta {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.15s;
+    }
+    .cta:hover { opacity: 0.7; }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="wordmark" id="wordmark" aria-label="The Early Stage">
+      <span class="black" id="part-before"></span><span class="red" id="part-after"></span><span class="cursor" id="cur"></span>
+    </div>
+
+    <p class="body-line" id="body">
+      The earliest AI teams in Massachusetts.<br>
+      Before the deck. Before the company. At MIT.
+    </p>
+
+    <p class="info" id="info">
+      Cambridge, MA &nbsp;·&nbsp; 2026
+    </p>
+  </main>
+
+  <footer>
+    <span class="footer-copy">© 2026 The Early Stage</span>
+    <a href="#" class="cta">Apply to demo</a>
+  </footer>
+
+  <script>
+    const full = "THE EARLY STAGE";
+    const splitAt = full.indexOf("STAGE"); // 10
+    const before = document.getElementById('part-before');
+    const after = document.getElementById('part-after');
+    const cur = document.getElementById('cur');
+
+    let i = 0;
+    function type() {
+      if (i < full.length) {
+        const ch = full[i];
+        if (i < splitAt) {
+          before.textContent += ch;
+        } else {
+          after.textContent += ch;
+          // cursor turns red once we hit STAGE
+          cur.style.background = '#D7160F';
+        }
+        i++;
+        const delay = ch === ' ' ? 120 : 80 + Math.random() * 60;
+        setTimeout(type, delay);
+      } else {
+        document.getElementById('body').classList.add('show');
+        document.getElementById('info').classList.add('show');
+      }
+    }
+
+    setTimeout(type, 500);
+  </script>
+
+</body>
+</html>
